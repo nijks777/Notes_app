@@ -11,23 +11,16 @@ export default function Login({setIsLogin}) {
         setErr('')
     }
 
-    const registerSubmit = async e => {
+    const registerSubmit = async e =>{
         e.preventDefault()
         try {
-            const res = await axios.post('/users/register', {
+            const res = await axios.post('/users/register',{
                 username: user.name,
                 email: user.email,
                 password: user.password
             })
             setUser({name: '', email: '', password: ''})
             setErr(res.data.msg)
-            
-            // If registration is successful, redirect to login page
-            if (res.data.msg === "User has been created!" || res.data.status === "success" || res.status === 200) {
-                setOnLogin(false) // This will switch to the login form
-                // Optional: Show a success message
-                setErr("Registration successful! Please login.")
-            }
         } catch (err) {
             err.response.data.msg && setErr(err.response.data.msg)
         }
